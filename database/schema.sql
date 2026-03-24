@@ -37,8 +37,8 @@ CREATE TABLE question (
 -- Choices: belong to a question (fixed MCQ with 4 options)
 CREATE TABLE choices (
     choice_id INT AUTO_INCREMENT PRIMARY KEY,
-    choice VARCHAR(1) NOT NULL,       -- 'A', 'B', 'C', 'D'
-    label TEXT NOT NULL,              -- full text of the option
+    choice VARCHAR(1) NOT NULL,      
+    label TEXT NOT NULL,             
     question_id INT NOT NULL,
     is_correct BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (question_id) REFERENCES question(question_id)
@@ -74,5 +74,5 @@ CREATE TABLE responses (
     FOREIGN KEY (choice_id) REFERENCES choices(choice_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
 
-    UNIQUE (session_id, question_id, user_id) -- one answer per student per question
+    UNIQUE (session_id, question_id, user_id) 
 );

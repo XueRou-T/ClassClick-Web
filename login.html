@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Clicker App Website</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const msg = params.get("msg");
+
+        if (msg === "success") {
+            alert("Signup successful! Please login.");
+        }
+        if (msg === "failed") {
+            alert("Wrong Username or Password. Please try again.");
+        }
+    </script>   
+    <body>
+        <header class="header-login">
+            <div class="logo">Clicker</div>
+
+            <div>Login</div>
+        </header>
+
+        <div class="login-container">
+
+            <img src="images/logo/stylemate.png" alt="Logo" class="login-logo">
+
+            <form action="http://localhost:9999/clicker/loginservlet" method="POST">
+                <table>
+                    <tr>
+                        <td>Username</td>
+                        <td><input type="text" name="username" placeholder="Username" required></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" name="password" placeholder="Password" required></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit">Login</button></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"> Don't have an account? <a href="signup.html">Sign up here</a></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>

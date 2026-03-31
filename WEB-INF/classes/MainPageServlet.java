@@ -19,42 +19,51 @@ public class MainPageServlet extends HttpServlet {
         throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
-        if (session == null) {
+        if (session == null || !"instructor".equals(session.getAttribute("usertype"))) {
             response.sendRedirect("login.html");
             return;
         }
 
+        int instructorId = (int) session.getAttribute("userId");
         String displayName = (String) session.getAttribute("displayName");
 
+        String sessionId = "";
         StringBuilder setsHtml = new StringBuilder();
 
         try (Connection conn = getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(
-                "SELECT set_id, set_name FROM question_set ORDER BY set_id"
-            );
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int setId = rs.getInt("set_id");
-                String setName = rs.getString("set_name");
-
-                setsHtml.append("<div class='set-card' ")
-                        .append("onclick=\"location.href='editquestions?set_id=")
-                        .append(setId).append("'\">")
-                        .append(setName)
-                        .append("</div>");
+            // Get active session for this instructor
+            PreparedStatement ps1 = conn.prepareStatement(
+                "SELECT session_id FROM sessions WHERE instructor_id=? AND status='active' ORDER BY start_time DESC LIMIT 1");
+            ps1.setInt(1, instructorId);
+            ResultSet rs1 = ps1.executeQuery();
+            if (rs1.next()) {
+                sessionId = String.valueOf(rs1.getInt("session_id"));
             }
 
+            // Get question sets
+            PreparedStatement ps2 = conn.prepareStatement(
+                "SELECT set_id, set_name FROM question_set ORDER BY set_id");
+            ResultSet rs2 = ps2.executeQuery();
+
+            while (rs2.next()) {
+                int sid = rs2.getInt("set_id");
+                String sname = rs2.getString("set_name");
+
+                setsHtml.append("<div class='set-card'>")
+                        .append("<form method='get' action='displaysession'>")
+                        .append("<input type='hidden' name='setId' value='").append(sid).append("'>")
+                        .append("<button type='submit'>").append(sname).append("</button>")
+                        .append("</form>")
+                        .append("</div>");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Always show + button
-        setsHtml.append("<button onclick=\"location.href='createset.html'\">+</button>");
-
         String html = readHtml("/mainpage.html");
         html = html.replace("<!-- DISPLAY_NAME -->", displayName)
-                   .replace("<!-- SETS -->", setsHtml.toString());
+                   .replace("<!-- SESSION_ID -->", sessionId)
+                   .replace("<!-- QUESTION_SETS -->", setsHtml.toString());
 
         response.setContentType("text/html");
         response.getWriter().write(html);

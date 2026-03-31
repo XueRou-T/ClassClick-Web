@@ -11,8 +11,8 @@ mysql -u myuser -p
 
 
 // After entering password, load these paths [ONLY ONCE]
-SOURCE C:/myWebProject/IM2073-Web/database/schema.sql;
-SOURCE C:/myWebProject/IM2073-Web/database/seed.sql;
+SOURCE C:/myWebProject/tomcat/webapps/clicker/database/schema.sql;
+SOURCE C:/myWebProject/tomcat/webapps/clicker/database/seed.sql;
 
 // Verification and testing
 SOURCE C:/myWebProject/IM2073-Web/database/queries.sql;
@@ -23,12 +23,12 @@ SOURCE C:/myWebProject/IM2073-Web/database/queries.sql;
 http://localhost:9999
 
 # Deploy project
-- Copy src/main/webapp → C:\myWebProject\tomcat\webapps\eshop.
+- Copy src/main/webapp → C:\myWebProject\tomcat\webapps\clicker.
 - Move all the html files dorectly under eshop
 
 ### Development
 # Compile servlets
-cd \myWebProject\tomcat\webapps\eshop\WEB-INF\classes
+cd \myWebProject\tomcat\webapps\clicker\WEB-INF\classes
 javac -cp ..\..\..\..\lib\servlet-api.jar;. *.java
 
 

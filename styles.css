@@ -188,3 +188,156 @@ button:hover{
 .login-container a:hover {
     text-decoration: underline;
 }
+
+/*Instructor Main Page*/
+.session-container {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.session-id {
+    font-size: 50px;
+    font-weight: bold;
+    color: #007bff;
+    border: 2px solid #007bff;
+    display: inline-block;
+    padding: 20px 40px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.sets-container {
+    margin-top: 20px;
+}
+
+.sets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.set-card {
+    flex: 1 1 200px;
+}
+
+.set-card button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.set-card button:hover {
+    background-color: #0056b3;
+}
+
+
+.start-btn {
+    margin-top: 30px;
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/*Display Questions*/
+.question-container {
+    margin: 40px auto;
+    max-width: 700px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.question-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* Options layout */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+    transition: background-color 0.3s;
+}
+
+.option-card:hover {
+    background-color: #e6f7ff;
+}
+
+.option-letter {
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 15px;
+    color: #007bff;
+}
+
+.option-label {
+    font-size: 20px;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+    margin-top: 30px;
+}
+
+.nav-btn {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 0 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Disabled state */
+.nav-btn[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Finish button */
+.finish-btn {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 0 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.finish-btn:hover {
+    background-color: #1e7e34;
+}

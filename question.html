@@ -1,0 +1,29 @@
+<h2>Edit Questions</h2>
+
+<form action="savequestions" method="POST">
+    
+    <div id="container">
+        <!-- QUESTIONS -->
+    </div>
+
+    <button type="button" onclick="addQuestion()">+</button>
+    <button type="submit">Save</button>
+
+    <input type="hidden" name="set_id" value="SET_ID">
+</form>
+
+<script>
+function addQuestion() {
+    const html = `
+    <div class="question-block">
+        <input name="question[]" placeholder="Question"/>
+        <input name="A[]" placeholder="A"/>
+        <input name="B[]" placeholder="B"/>
+        <input name="C[]" placeholder="C"/>
+        <input name="D[]" placeholder="D"/>
+    </div>`;
+    
+    document.getElementById("container")
+        .insertAdjacentHTML("beforeend", html);
+}
+</script>

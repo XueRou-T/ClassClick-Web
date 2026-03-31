@@ -24,7 +24,7 @@ public class MainPageServlet extends HttpServlet {
             return;
         }
 
-        String displayName = (String) session.getAttribute("displayName");
+        String displayName = (String) session.getAttribute("displayname");
 
         StringBuilder setsHtml = new StringBuilder();
 

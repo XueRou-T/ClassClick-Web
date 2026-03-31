@@ -65,7 +65,7 @@ public class QuestionServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        // If no questions → show 1 empty
+        // If no questions show 1 empty
         if (!hasQuestions) {
             questionsHtml.append(buildBlock("", "", "", "", ""));
         }

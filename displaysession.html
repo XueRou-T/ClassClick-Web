@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Session Start</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="display">
+    <div class="session-container">
+        <h2>Session ID</h2>
+        <div class="session-id"><!-- SESSION_ID --></div>
+    </div>
+
+    <div class="start-container">
+        <form method="get" action="displayquestion">
+            <input type="hidden" name="setId" value="<!-- SET_ID -->">
+            <button type="submit" class="start-btn">Start Quiz</button>
+        </form>
+    </div>
+</body>
+</html>

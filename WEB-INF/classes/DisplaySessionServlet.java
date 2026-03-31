@@ -38,25 +38,23 @@ public class DisplaySessionServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    
+        String html = readHtml("/displaysession.html");
+                html = html.replace("<!-- SESSION_ID -->", sessionId)
+                           .replace("<!-- SET_ID -->", setId != null ? setId : "");
 
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                response.getWriter().write(html);
+            }
 
-        // Inline HTML output
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Session Start</title>");
-        out.println("<link rel=\"stylesheet\" href=\"styles.css\">");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h2>Session ID</h2>");
-        out.println("<div class='session-id'>" + sessionId + "</div>");
-        out.println("<form method='get' action='displayquestion'>");
-        out.println("<input type='hidden' name='setId' value='" + setId + "'>");
-        out.println("<button type='submit' class='start-btn'>Start Quiz</button>");
-        out.println("</form>");
-        out.println("</body>");
-        out.println("</html>");
+    
+    private String readHtml(String path) throws IOException {
+        InputStream is = getServletContext().getResourceAsStream(path);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) sb.append(line).append("\n");
+        return sb.toString();
     }
 }
+

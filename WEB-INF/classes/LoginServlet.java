@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
 
             // Check if username and password is correct
             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT * FROM users WHERE username = ? && password = ?");
+                "SELECT * FROM users WHERE username = ? AND password = ?");
             stmt.setString(1, username);
             stmt.setString(2, password);
 
@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
             if (rs.next()) {
 
                 // Create session
-                HttpSession session = request.getSession();
+                HttpSession session = request.getSession(true);
                 session.setAttribute("username", rs.getString("username"));
                 session.setAttribute("displayname", rs.getString("display_name"));
                 session.setAttribute("usertype", rs.getString("usertype"));

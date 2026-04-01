@@ -39,7 +39,7 @@ CREATE TABLE choices (
 -- Sessions: instructor runs a quiz set
 CREATE TABLE sessions (
     session_id INT AUTO_INCREMENT PRIMARY KEY,
-    set_id INT NOT NULL,
+    set_id INT,
     instructor_id INT NOT NULL,
     current_question_id INT,
     status ENUM('active', 'ended') DEFAULT 'active',

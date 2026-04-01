@@ -41,6 +41,22 @@ public class DisplayQuestionServlet extends HttpServlet {
 
                 int questionId = questionIds.get(qIndex);
 
+               HttpSession session = request.getSession(false);
+                if (session != null) {
+                    session.setAttribute("currentquestion", questionId);
+
+                    Integer sessionId = (Integer) session.getAttribute("sessionid");
+
+                    if (sessionId != null) {
+                        PreparedStatement updateSession = conn.prepareStatement(
+                            "UPDATE sessions SET current_question_id=? WHERE session_id=?"
+                        );
+                        updateSession.setInt(1, questionId);
+                        updateSession.setInt(2, sessionId);
+                        updateSession.executeUpdate();
+                    }
+                }
+
                 // Get question text
                 PreparedStatement qps = conn.prepareStatement("SELECT text FROM question WHERE question_id=?");
                 qps.setInt(1, questionId);

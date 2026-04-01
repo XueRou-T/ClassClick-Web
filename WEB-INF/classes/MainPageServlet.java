@@ -38,7 +38,6 @@ public class MainPageServlet extends HttpServlet {
 
         try (Connection conn = getConnection()) {
 
-            // 🔍 Get active session
             PreparedStatement ps1 = conn.prepareStatement(
                 "SELECT session_id FROM sessions WHERE instructor_id=? AND status='active' ORDER BY start_time DESC LIMIT 1"
             );
@@ -72,7 +71,6 @@ public class MainPageServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        // 🔘 Create Session Button (AJAX)
         String createSessionButton =
             "<button onclick='createSession()'>Create New Session</button>" +
             "<p id='sessionStatus'></p>" +
@@ -91,7 +89,6 @@ public class MainPageServlet extends HttpServlet {
             "}" +
             "</script>";
 
-        // 📄 Load HTML template
         String html = readHtml("/mainpage.html");
 
         html = html.replace("<!-- DISPLAY_NAME -->", displayName)

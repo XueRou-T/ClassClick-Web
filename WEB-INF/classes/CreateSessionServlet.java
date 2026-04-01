@@ -45,7 +45,7 @@ public class CreateSessionServlet extends HttpServlet {
 
             if (rs.next()) {
                 int sessionId = rs.getInt(1);
-                session.setAttribute("sessionid", sessionId);
+                session.setAttribute("sessionid", sessionId); 
             }
 
             conn.commit(); 

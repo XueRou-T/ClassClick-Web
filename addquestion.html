@@ -1,29 +1,62 @@
-<h2>Edit Questions</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Question</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 
-<form action="savequestions" method="POST">
-    
-    <div id="container">
-        <!-- QUESTIONS -->
+<header class="main-header">
+    <div class="logo">Clicker</div>
+</header>
+
+<body>
+    <div class="form-container">
+        <h2>Add Question to <!-- SET_NAME --></h2>
+        <p class="question-counter">Question <!-- QUESTION_NUMBER --> in this set</p>
+ 
+        <form method="post" action="addquestion">
+            <input type="hidden" name="setId" value="<!-- SET_ID -->">
+
+            <div class="form-group">
+                <label for="questionText">Question Text</label>
+                <textarea id="questionText" name="questionText" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="optionA">Option A</label>
+                <input type="text" id="optionA" name="optionA" required>
+            </div>
+
+            <div class="form-group">
+                <label for="optionB">Option B</label>
+                <input type="text" id="optionB" name="optionB" required>
+            </div>
+
+            <div class="form-group">
+                <label for="optionC">Option C</label>
+                <input type="text" id="optionC" name="optionC" required>
+            </div>
+
+            <div class="form-group">
+                <label for="optionD">Option D</label>
+                <input type="text" id="optionD" name="optionD" required>
+            </div>
+
+            <div class="form-group">
+                <label>Correct Answer</label>
+                <select name="correctOption" required>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+
+            <div class="button-row">
+                <button type="submit" class="secondary-btn" name="action" value="addAnother">Add Another Question</button>
+                <button type="submit" class="primary-btn" name="action" value="finish">Finish & Review Set</button>
+            </div>
+        </form>
     </div>
-
-    <button type="button" onclick="addQuestion()">+</button>
-    <button type="submit">Save</button>
-
-    <input type="hidden" name="set_id" value="SET_ID">
-</form>
-
-<script>
-function addQuestion() {
-    const html = `
-    <div class="question-block">
-        <input name="question[]" placeholder="Question"/>
-        <input name="A[]" placeholder="A"/>
-        <input name="B[]" placeholder="B"/>
-        <input name="C[]" placeholder="C"/>
-        <input name="D[]" placeholder="D"/>
-    </div>`;
-    
-    document.getElementById("container")
-        .insertAdjacentHTML("beforeend", html);
-}
-</script>
+</body>
+</html>

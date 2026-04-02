@@ -4,6 +4,11 @@
     <title>Instructor Main Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
+<header class="main-header">
+    <div class="logo">Clicker</div>
+</header>
+
 <body>
     <h1>Welcome, <!-- DISPLAY_NAME -->!</h1>
 
@@ -20,5 +25,51 @@
             <!-- QUESTION_SETS -->
         </div>
     </div>
+    
+    <!-- Create Question Set -->
+    <div class="create-set-container">
+        <h2>Create a New Question Set</h2>
+
+        <div id="error-message" class="error-message" style="display:none;"></div>
+
+        <form id="createSetForm">
+            <input type="text" id="setName" name="setName" required placeholder="Enter set name">
+            <button type="submit">Create Question Set</button>
+        </form>
+    </div>
+
+    <script>
+    document.getElementById("createSetForm").addEventListener("submit", function(e) {
+        e.preventDefault(); 
+        const setNameInput = document.getElementById("setName");
+        const setName = setNameInput.value.trim();
+
+        fetch("createquestionset", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "setName=" + encodeURIComponent(setName)
+        })
+        .then(async res => {
+            const text = await res.text();
+            if (!res.ok) {
+                // Show error popup
+                const errorDiv = document.getElementById("error-message");
+                errorDiv.textContent = text;
+                errorDiv.style.display = "block";
+                setNameInput.value = ""; 
+            } else {
+                // Success: redirect to addquestion
+                const setId = text.replace("SUCCESS:", "");
+                window.location.href = "addquestion?setId=" + setId;
+            }
+        })
+        .catch(err => {
+            const errorDiv = document.getElementById("error-message");
+            errorDiv.textContent = "Unexpected error: " + err;
+            errorDiv.style.display = "block";
+            setNameInput.value = "";
+        });
+    });
+    </script>
 </body>
 </html>

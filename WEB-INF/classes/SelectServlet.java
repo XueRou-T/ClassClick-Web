@@ -8,14 +8,15 @@ import jakarta.servlet.annotation.*;
 public class SelectServlet extends HttpServlet {
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
     String choiceLabel = request.getParameter("choice");
     String sessionIdRaw = request.getParameter("session");
     String questionIdRaw = request.getParameter("question_id");
+    String userId = request.getParameter("user_id");
 
-    if (choiceLabel == null || sessionIdRaw == null || questionIdRaw == null) {
+    if (choiceLabel == null || sessionIdRaw == null || questionIdRaw == null || userId == null) {
         response.sendError(400, "Missing parameters");
         return;
     }
@@ -26,7 +27,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         
         int sessionID = Integer.parseInt(sessionIdRaw);
         int questionID = Integer.parseInt(questionIdRaw);
-        int userID = 1; 
+        int userID = Integer.parseInt(userId);
 
         Integer choiceID = null;
         String cSql = "SELECT choice_id FROM choices WHERE question_id=? AND choice=?";

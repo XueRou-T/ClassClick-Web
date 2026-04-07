@@ -4,8 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet("/getquestion")
-public class GetQuestionServlet extends HttpServlet {
+@WebServlet("/loginstudent")
+public class LoginStudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -14,10 +14,10 @@ public class GetQuestionServlet extends HttpServlet {
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
 
-        String sessionIdRaw = request.getParameter("session_id");
+        String username = request.getParameter("username");
 
-        if (sessionIdRaw == null || sessionIdRaw.isEmpty()) {
-            out.print("no_session_param");
+        if (username == null || username.isEmpty()) {
+            out.print("no username input");
             return;
         }
 
@@ -25,25 +25,21 @@ public class GetQuestionServlet extends HttpServlet {
                 "jdbc:mysql://localhost:3306/clicker_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                 "myuser", "xxxx")) {
 
-            int sessionID = Integer.parseInt(sessionIdRaw);
-
             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT current_question_id, status FROM sessions WHERE session_id=?");
-            stmt.setInt(1, sessionID);
+                "SELECT * FROM users WHERE username=?");
+            stmt.setString(1, username);
 
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                 String status = rs.getString("status");
-                if ("active".equalsIgnoreCase(status)) 
-                {
-                    int questionID = rs.getInt("current_question_id");
-                    out.print(questionID); 
-                }
-                else
-                    out.println("ended");
+           if (rs.next()) {
+                String password = rs.getString("password");
+                int userId = rs.getInt("user_id"); 
+                
+                response.setStatus(HttpServletResponse.SC_OK);
+                out.print(userId + "," + password); 
             } else {
-                out.print("no_session_in_db");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                out.print("no_username_found");
             }
 
         } catch (SQLException | NumberFormatException e) {

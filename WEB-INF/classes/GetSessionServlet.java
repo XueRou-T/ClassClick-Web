@@ -4,8 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet("/getquestion")
-public class GetQuestionServlet extends HttpServlet {
+@WebServlet("/getsession")
+public class GetSessionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -28,22 +28,16 @@ public class GetQuestionServlet extends HttpServlet {
             int sessionID = Integer.parseInt(sessionIdRaw);
 
             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT current_question_id, status FROM sessions WHERE session_id=?");
+                "SELECT * FROM sessions WHERE session_id=?");
             stmt.setInt(1, sessionID);
 
             ResultSet rs = stmt.executeQuery();
-
+            
             if (rs.next()) {
-                 String status = rs.getString("status");
-                if ("active".equalsIgnoreCase(status)) 
-                {
-                    int questionID = rs.getInt("current_question_id");
-                    out.print(questionID); 
-                }
-                else
-                    out.println("ended");
+                String status = rs.getString("status");
+                out.print(status); 
             } else {
-                out.print("no_session_in_db");
+                out.print("No session found");
             }
 
         } catch (SQLException | NumberFormatException e) {

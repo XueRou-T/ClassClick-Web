@@ -35,8 +35,10 @@
 
         <!-- Finish button (only visible if last question) -->
         <!-- FINISH == true -->
-        <form method="get" action="statistics" style="display:inline;" id="finishForm">
+        <form method="get" action="displayquestion" style="display:inline;" id="finishForm">
             <input type="hidden" name="setId" value="<!-- SET_ID -->">
+            <input type="hidden" name="qIndex" value="<!-- NEXT -->">
+            <input type="hidden" name="finish" value="true">
             <button type="submit" class="finish-btn">Finish & Show Statistics</button>
         </form>
     </div>

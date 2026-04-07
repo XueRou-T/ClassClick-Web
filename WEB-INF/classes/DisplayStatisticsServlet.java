@@ -8,104 +8,138 @@ import jakarta.servlet.annotation.*;
 @WebServlet("/statistics")
 public class DisplayStatisticsServlet extends HttpServlet {
 
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/clicker_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
+            "myuser", "xxxx"
+        );
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
+        String setId = request.getParameter("setId");
+        int qIndex = (request.getParameter("qIndex") == null) ? 0 : Integer.parseInt(request.getParameter("qIndex"));
+
+        List<Integer> questionIds = new ArrayList<>();
+        String questionText = "";
+        StringBuilder optionsHtml = new StringBuilder();
+        String chartJs = "";
 
         HttpSession session = request.getSession(false);
         Integer sessionId = (session != null) ? (Integer) session.getAttribute("sessionid") : null;
-        
-        if (session == null || session.getAttribute("currentquestion") == null) {
-            response.getWriter().write("No active question.");
-            return;
-        }
 
-        int questionId = (Integer) session.getAttribute("currentquestion");
-
-
-        String questionText = "";
-        StringBuilder html = new StringBuilder();
-
-        List<String> labels = new ArrayList<>();
-        List<Integer> counts = new ArrayList<>();
-
-        try {
-            Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/clicker_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
-                "myuser", "xxxx");
-
-            PreparedStatement q = conn.prepareStatement(
-                "SELECT text FROM question WHERE question_id=?");
-            q.setInt(1, questionId);
-
-            ResultSet qrs = q.executeQuery();
-            if (qrs.next()) {
-                questionText = qrs.getString("text");
-            }
-
-           PreparedStatement c = conn.prepareStatement(
-                "SELECT c.label, c.text, COUNT(r.choice_id) AS total " +
-                "FROM choices c " +
-                "LEFT JOIN response r ON c.choice_id = r.choice_id AND r.session_id=? " +
-                "WHERE c.question_id=? " +
-                "GROUP BY c.choice_id " +
-                "ORDER BY c.label"
+        try (Connection conn = getConnection()) {
+            // Get all question IDs for this set
+            PreparedStatement ps = conn.prepareStatement(
+                "SELECT question_id FROM question WHERE set_id=? ORDER BY question_id"
             );
-
-            if (sessionId == null) sessionId = 0;
-
-            c.setInt(1, sessionId);
-            c.setInt(2, questionId);
-
-            ResultSet crs = c.executeQuery();
-
-            while (crs.next()) {
-                String choice = crs.getString("label"); // A B C D
-                String label = crs.getString("text");
-                int total = crs.getInt("total");
-
-                labels.add(choice);
-                counts.add(total);
-
-                html.append("<p>")
-                    .append(choice).append(": ")
-                    .append(label)
-                    .append(" (").append(total).append(" votes)")
-                    .append("</p>");
+            ps.setInt(1, Integer.parseInt(setId));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                questionIds.add(rs.getInt("question_id"));
             }
 
-            conn.close();
+            if (!questionIds.isEmpty()) {
+                if (qIndex < 0) qIndex = 0;
+                if (qIndex >= questionIds.size()) qIndex = questionIds.size() - 1;
 
-        } catch (Exception e) {
+                int questionId = questionIds.get(qIndex);
+
+                // Get question text
+                PreparedStatement qps = conn.prepareStatement("SELECT text FROM question WHERE question_id=?");
+                qps.setInt(1, questionId);
+                ResultSet qrs = qps.executeQuery();
+                if (qrs.next()) questionText = qrs.getString("text");
+
+                // Get choices + counts from responses
+                PreparedStatement cps = conn.prepareStatement(
+                    "SELECT c.choice, c.label, c.is_correct, COUNT(r.response_id) AS total " +
+                    "FROM choices c " +
+                    "LEFT JOIN responses r ON c.choice_id = r.choice_id AND r.session_id=? AND r.question_id=? " +
+                    "WHERE c.question_id=? " +
+                    "GROUP BY c.choice_id ORDER BY c.choice"
+                );
+                cps.setInt(1, sessionId != null ? sessionId : 0);
+                cps.setInt(2, questionId);
+                cps.setInt(3, questionId);
+                ResultSet crs = cps.executeQuery();
+
+                List<String> labels = new ArrayList<>();
+                List<Integer> counts = new ArrayList<>();
+
+                while (crs.next()) {
+                    String label = crs.getString("choice") + ": " + crs.getString("label");
+                    int count = crs.getInt("total");
+                    boolean correct = crs.getBoolean("is_correct");
+
+                    optionsHtml.append("<li class='choice-item")
+                               .append(correct ? " correct" : "")
+                               .append("'>")
+                               .append(label).append(" — ")
+                               .append(count).append(" students</li>");
+
+                    labels.add(label);
+                    counts.add(count);
+                }
+
+                chartJs = "<canvas id='chart'></canvas>\n" +
+                          "<script>\n" +
+                          "const labels = " + toJsArray(labels) + ";\n" +
+                          "const counts = " + counts.toString() + ";\n" +
+                          "new Chart(document.getElementById('chart'), {\n" +
+                          "  type: 'bar',\n" +
+                          "  data: { labels: labels, datasets: [{ label: 'Votes', data: counts, " + "backgroundColor: ['#007bff','#28a745','#ffc107','#dc3545'] }] },\n" +
+                          "  options: { scales: { y: { beginAtZero: true } } }\n" +
+                          "});\n" +
+                          "</script>\n";
+            } else {
+                questionText = "No questions found for this set.";
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String labelsStr = "[\"" + String.join("\",\"", labels) + "\"]";
-        String countsStr = counts.toString();
+        int totalQuestions = questionIds.size();
+        int prevIndex = qIndex - 1;
+        int nextIndex = qIndex + 1;
+        String prevDisabled = (qIndex <= 0) ? "disabled" : "";
+        boolean isLast = (qIndex >= totalQuestions - 1);
+
+        String html = readHtml("/statistics.html");
+        html = html.replace("<!-- QUESTION_TEXT -->", questionText)
+                   .replace("<!-- OPTIONS -->", optionsHtml.toString())
+                   .replace("<!-- CHART_DATA -->", chartJs)
+                   .replace("<!-- SET_ID -->", setId)
+                   .replace("<!-- QINDEX -->", String.valueOf(qIndex + 1))
+                   .replace("<!-- TOTAL -->", String.valueOf(totalQuestions))
+                   .replace("<!-- PREV -->", String.valueOf(prevIndex))
+                   .replace("<!-- NEXT -->", String.valueOf(nextIndex))
+                   .replace("<!-- PREV_DISABLED -->", prevDisabled)
+                   .replace("<!-- NEXT_DISABLED -->", isLast ? "disabled" : "")
+                   .replace("<!-- RETURN_BUTTON -->", isLast ? "<form method='get' action='mainpageservlet' style='display:inline;'>" + "<button type='submit' class='nav-btn'>Return</button></form>" : "");
 
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+        response.getWriter().write(html);
+    }
 
-        out.println("<html><head>");
-        out.println("<script src='https://cdn.jsdelivr.net/npm/chart.js'></script>");
-        out.println("</head><body>");
+    private String toJsArray(List<String> list) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < list.size(); i++) {
+            sb.append("\"").append(list.get(i)).append("\"");
+            if (i < list.size() - 1) sb.append(",");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
-        out.println("<h2>" + questionText + "</h2>");
-        out.println(html.toString());
-
-        out.println("<canvas id='chart'></canvas>");
-
-        out.println("<script>");
-        out.println("const labels = " + labelsStr + ";");
-        out.println("const data = " + countsStr + ";");
-
-        out.println("new Chart(document.getElementById('chart'), {");
-        out.println("type: 'bar',");
-        out.println("data: { labels: labels, datasets: [{ label: 'Votes', data: data }] },");
-        out.println("options: { scales: { y: { beginAtZero: true } } }");
-        out.println("});");
-
-        out.println("</script>");
-        out.println("</body></html>");
+    private String readHtml(String path) throws IOException {
+        InputStream is = getServletContext().getResourceAsStream(path);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) sb.append(line).append("\n");
+        return sb.toString();
     }
 }

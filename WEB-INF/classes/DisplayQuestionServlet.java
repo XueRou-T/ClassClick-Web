@@ -11,7 +11,8 @@ public class DisplayQuestionServlet extends HttpServlet {
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/clicker_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
-            "myuser", "xxxx");
+            "myuser", "xxxx"
+        );
     }
 
     @Override
@@ -26,9 +27,9 @@ public class DisplayQuestionServlet extends HttpServlet {
         StringBuilder optionsHtml = new StringBuilder();
 
         try (Connection conn = getConnection()) {
-            // Get all question IDs for this set
             PreparedStatement ps = conn.prepareStatement(
-                "SELECT question_id FROM question WHERE set_id=? ORDER BY question_id");
+                "SELECT question_id FROM question WHERE set_id=? ORDER BY question_id"
+            );
             ps.setInt(1, Integer.parseInt(setId));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -41,19 +42,42 @@ public class DisplayQuestionServlet extends HttpServlet {
 
                 int questionId = questionIds.get(qIndex);
 
-               HttpSession session = request.getSession(false);
+                HttpSession session = request.getSession(false);
                 if (session != null) {
                     session.setAttribute("currentquestion", questionId);
-
                     Integer sessionId = (Integer) session.getAttribute("sessionid");
 
                     if (sessionId != null) {
+                        // Add question set
+                        if (qIndex == 0) {
+                            PreparedStatement startQuiz = conn.prepareStatement(
+                                "UPDATE sessions SET set_id=?, status='active', start_time=NOW() WHERE session_id=?"
+                            );
+                            startQuiz.setInt(1, Integer.parseInt(setId));
+                            startQuiz.setInt(2, sessionId);
+                            startQuiz.executeUpdate();
+                        }
+
+                        // Update current question
                         PreparedStatement updateSession = conn.prepareStatement(
                             "UPDATE sessions SET current_question_id=? WHERE session_id=?"
                         );
                         updateSession.setInt(1, questionId);
                         updateSession.setInt(2, sessionId);
                         updateSession.executeUpdate();
+
+                        // End session
+                        String finish = request.getParameter("finish");
+                        if ("true".equals(finish)) {
+                            PreparedStatement endSession = conn.prepareStatement(
+                                "UPDATE sessions SET status='ended', end_time=NOW() WHERE session_id=?"
+                            );
+                            endSession.setInt(1, sessionId);
+                            endSession.executeUpdate();
+
+                            response.sendRedirect("statistics?setId=" + setId + "&sessionId=" + sessionId);
+                            return;
+                        }
                     }
                 }
 
@@ -65,7 +89,8 @@ public class DisplayQuestionServlet extends HttpServlet {
 
                 // Get choices
                 PreparedStatement cps = conn.prepareStatement(
-                    "SELECT choice, label FROM choices WHERE question_id=? ORDER BY choice");
+                    "SELECT choice, label FROM choices WHERE question_id=? ORDER BY choice"
+                );
                 cps.setInt(1, questionId);
                 ResultSet crs = cps.executeQuery();
                 while (crs.next()) {

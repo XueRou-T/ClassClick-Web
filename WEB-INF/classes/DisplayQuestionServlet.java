@@ -123,7 +123,7 @@ public class DisplayQuestionServlet extends HttpServlet {
                    .replace("<!-- NEXT -->", String.valueOf(nextIndex))
                    .replace("<!-- PREV_DISABLED -->", prevDisabled)
                    .replace("<!-- NEXT_DISABLED -->", isLast ? "disabled" : "")
-                   .replace("<!-- FINISH -->", isLast ? "" : "display:none;");
+                   .replace("<!-- FINISH -->", isLast ? "display:inline;" : "display:none;");
 
         response.setContentType("text/html");
         response.getWriter().write(html);

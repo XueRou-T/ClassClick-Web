@@ -3,31 +3,40 @@
 <head>
     <title>Instructor Main Page</title>
     <link rel="stylesheet" href="styles.css">
-     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'>
 </head>
-
-<header class="main-header">
-    <div class="logo">Clicker</div>
-    <a href="logoutservlet"><i class="fa-solid fa-right-from-bracket" style='font-size:24px; color:white'></i></a>
-</header>
-
 <body>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo">Clicker</div>
+        <a href="logoutservlet">
+            <i class="fa-solid fa-right-from-bracket" style="font-size:24px; color:white"></i>
+        </a>
+    </header>
+
+    <!-- Welcome -->
     <h1>Welcome, <!-- DISPLAY_NAME -->!</h1>
 
+    <!-- Session ID -->
     <div class="session-container">
         <h2>Session ID</h2>
         <div class="session-id"><!-- SESSION_ID --></div>
-        <br>
-        <!-- CREATE_SESSION_BUTTON -->
+
+        <!-- Create Session Button -->
+        <div class="create-session">
+            <!-- CREATE_SESSION_BUTTON -->
+        </div>
     </div>
 
+    <!-- Sets container -->
     <div class="sets-container">
         <h2>Select a Question Set</h2>
         <div class="sets">
             <!-- QUESTION_SETS -->
         </div>
     </div>
-    
+
     <!-- Create Question Set -->
     <div class="create-set-container">
         <h2>Create a New Question Set</h2>
@@ -54,13 +63,11 @@
         .then(async res => {
             const text = await res.text();
             if (!res.ok) {
-                // Show error popup
                 const errorDiv = document.getElementById("error-message");
                 errorDiv.textContent = text;
                 errorDiv.style.display = "block";
                 setNameInput.value = ""; 
             } else {
-                // Success: redirect to addquestion
                 const setId = text.replace("SUCCESS:", "");
                 window.location.href = "addquestion?setId=" + setId;
             }

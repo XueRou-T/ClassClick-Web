@@ -114,7 +114,7 @@ public class ReviewQuestionSetServlet extends HttpServlet {
           + "function toggleEditForm(qid){var f=document.getElementById('editForm-'+qid);f.style.display=(f.style.display==='none'?'block':'none');}"
           + "</script>"
           + "</head><body>"
-          + "<header class='main-header'><div class='logo'>CLICKER APP</div>"
+          + "<header class='main-header'><div class='logo'>Clicker</div>"
           + "<div class='header-right'><a href='mainpageservlet'><i class='fa-solid fa-house'></i></a>"
           + "<a href='logoutservlet'><i class='fa-solid fa-right-from-bracket'></i></a></div></header>"
           + "<div class='questions-overview'>"

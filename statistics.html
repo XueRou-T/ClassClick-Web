@@ -4,28 +4,30 @@
     <title>Statistics</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'>
 </head>
 <body>
-<header class="main-header">
-    <div class="logo">Clicker</div>
-</header>
+    <header class="main-header">
+        <div class="logo"><a href="mainpageservlet">Clicker</a></div>
+        <a href="logoutservlet"><i class="fa-solid fa-right-from-bracket" style='font-size:24px; color:white'></i></a>
+    </header>
 
-<h2>Question <!-- QINDEX --> of <!-- TOTAL --></h2>
+    <h2>Question <!-- QINDEX --> of <!-- TOTAL --></h2>
 
-<div class="question-container">
-    <div class="question-text"><!-- QUESTION_TEXT --></div>
-    <ul class="choices-list">
-        <!-- OPTIONS -->
-    </ul>
-    <!-- CHART_DATA -->
-</div>
+    <div class="question-container">
+        <div class="question-text"><!-- QUESTION_TEXT --></div>
+        <ul class="choices-list">
+            <!-- OPTIONS -->
+        </ul>
+        <!-- CHART_DATA -->
+    </div>
 
-<div class="nav-buttons">
-    <form method="get" action="statistics" style="display:inline;">
-        <input type="hidden" name="setId" value="<!-- SET_ID -->">
-        <input type="hidden" name="qIndex" value="<!-- PREV -->">
-        <button type="submit" class="nav-btn" <!-- PREV_DISABLED --> >Previous</button>
-    </form>
+    <div class="nav-buttons">
+        <form method="get" action="statistics" style="display:inline;">
+            <input type="hidden" name="setId" value="<!-- SET_ID -->">
+            <input type="hidden" name="qIndex" value="<!-- PREV -->">
+            <button type="submit" class="nav-btn" <!-- PREV_DISABLED --> >Previous</button>
+        </form>
 
     <form method="get" action="statistics" style="display:inline;">
         <input type="hidden" name="setId" value="<!-- SET_ID -->">
@@ -33,8 +35,8 @@
         <button type="submit" class="return-btn" <!-- NEXT_DISABLED --> >Next</button>
     </form>
 
-    <!-- RETURN_BUTTON -->
-</div>
+        <!-- RETURN_BUTTON -->
+    </div>
 
-</body>
+    </body>
 </html>

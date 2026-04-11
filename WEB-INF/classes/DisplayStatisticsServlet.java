@@ -27,8 +27,9 @@ public class DisplayStatisticsServlet extends HttpServlet {
         StringBuilder optionsHtml = new StringBuilder();
         String chartJs = "";
 
-        HttpSession session = request.getSession(false);
-        Integer sessionId = (session != null) ? (Integer) session.getAttribute("sessionid") : null;
+        String sessionIdParam = request.getParameter("sessionId");
+        int sessionId = (sessionIdParam != null) ? Integer.parseInt(sessionIdParam) : 0;
+
 
         try (Connection conn = getConnection()) {
             // Get all question IDs for this set
@@ -61,7 +62,7 @@ public class DisplayStatisticsServlet extends HttpServlet {
                     "WHERE c.question_id=? " +
                     "GROUP BY c.choice_id ORDER BY c.choice"
                 );
-                cps.setInt(1, sessionId != null ? sessionId : 0);
+                cps.setInt(1, sessionId);
                 cps.setInt(2, questionId);
                 cps.setInt(3, questionId);
                 ResultSet crs = cps.executeQuery();
@@ -112,6 +113,7 @@ public class DisplayStatisticsServlet extends HttpServlet {
                    .replace("<!-- OPTIONS -->", optionsHtml.toString())
                    .replace("<!-- CHART_DATA -->", chartJs)
                    .replace("<!-- SET_ID -->", setId)
+                   .replace("<!-- SESSION_ID -->", String.valueOf(sessionId))
                    .replace("<!-- QINDEX -->", String.valueOf(qIndex + 1))
                    .replace("<!-- TOTAL -->", String.valueOf(totalQuestions))
                    .replace("<!-- PREV -->", String.valueOf(prevIndex))

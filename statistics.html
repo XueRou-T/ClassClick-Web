@@ -26,18 +26,20 @@
     <div class="nav-buttons">
         <form method="get" action="statistics" style="display:inline;">
             <input type="hidden" name="setId" value="<!-- SET_ID -->">
+            <input type="hidden" name="sessionId" value="<!-- SESSION_ID -->">
             <input type="hidden" name="qIndex" value="<!-- PREV -->">
             <button type="submit" class="nav-btn" <!-- PREV_DISABLED --> >Previous</button>
         </form>
 
-    <form method="get" action="statistics" style="display:inline;">
-        <input type="hidden" name="setId" value="<!-- SET_ID -->">
-        <input type="hidden" name="qIndex" value="<!-- NEXT -->">
-        <button type="submit" class="return-btn" <!-- NEXT_DISABLED --> >Next</button>
-    </form>
+        <form method="get" action="statistics" style="display:inline;">
+            <input type="hidden" name="setId" value="<!-- SET_ID -->">
+            <input type="hidden" name="sessionId" value="<!-- SESSION_ID -->">
+            <input type="hidden" name="qIndex" value="<!-- NEXT -->">
+            <button type="submit" class="return-btn" <!-- NEXT_DISABLED --> >Next</button>
+        </form>
 
         <!-- RETURN_BUTTON -->
     </div>
 
-    </body>
+</body>
 </html>

@@ -75,7 +75,7 @@ public class DisplayQuestionServlet extends HttpServlet {
                             endSession.setInt(1, sessionId);
                             endSession.executeUpdate();
 
-                            response.sendRedirect("statistics?setId=" + setId + "&sessionId=" + sessionId);
+                            response.sendRedirect("statistics?setId=" + setId + "&sessionId=" + sessionId + "&qIndex=0");
                             return;
                         }
                     }

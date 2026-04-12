@@ -75,7 +75,8 @@ public class DisplayQuestionServlet extends HttpServlet {
                             endSession.setInt(1, sessionId);
                             endSession.executeUpdate();
 
-                            response.sendRedirect("statistics?setId=" + setId + "&sessionId=" + sessionId + "&qIndex=0");
+                            // Redirect with origin flag
+                            response.sendRedirect("statistics?setId=" + setId + "&sessionId=" + sessionId + "&qIndex=0&origin=mainpage");
                             return;
                         }
                     }
@@ -123,7 +124,14 @@ public class DisplayQuestionServlet extends HttpServlet {
                    .replace("<!-- NEXT -->", String.valueOf(nextIndex))
                    .replace("<!-- PREV_DISABLED -->", prevDisabled)
                    .replace("<!-- NEXT_DISABLED -->", isLast ? "disabled" : "")
-                   .replace("<!-- FINISH -->", isLast ? "display:inline;" : "display:none;");
+                   .replace("<!-- FINISH_BUTTON -->", isLast ? "<form method='get' action='displayquestion' style='display:inline;' id='finishForm'>" +
+                        "<input type='hidden' name='setId' value='" + setId + "'>" +
+                        "<input type='hidden' name='qIndex' value='" + nextIndex + "'>" +
+                        "<input type='hidden' name='finish' value='true'>" +
+                        "<button type='submit' class='finish-btn'>Finish & Show Statistics</button>" +
+                        "</form>"
+                      : "");
+
 
         response.setContentType("text/html");
         response.getWriter().write(html);

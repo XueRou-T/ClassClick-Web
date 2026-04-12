@@ -266,7 +266,8 @@ h1 {
     min-width: 200px;
     text-align: center;
     background: transparent;   
-    box-shadow: none
+    box-shadow: none;
+    padding-left: 10px;
 }
 
 .set-card button {
@@ -274,9 +275,11 @@ h1 {
     padding: 15px;
     font-size: 18px;
     background-color: #007bff;
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .set-card button:hover {
@@ -297,12 +300,20 @@ h1 {
     text-align: left;
 }
 
+.create-set-container form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 10px;
+}
+
 .create-set-container input[type="text"] {
     width: 70%;
     padding: 8px;
     margin-right: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    padding-left: 10px;
 }
 
 .create-set-container input[type="text"]:focus {
@@ -311,16 +322,16 @@ h1 {
 }
 
 .create-set-container button {
-    padding: 8px 20px;
+    padding: 10px 22px;
     background-color: #007bff;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     color: #fff;
     cursor: pointer;
 }
 
 .create-set-container button:hover {
-    background-color: #0056b3;
+    background-color: #28a745;
 }
 
 .error-message {
@@ -805,9 +816,8 @@ canvas {
 }
 
 .history-entry-container .history-btn {
-    display: block;   
-    margin-top: 10px;  
-    width: fit-content; 
+    display: inline-block;  
+    margin-left: 15px;
     padding: 10px 16px;
     font-size: 14px;
     background-color: #007bff;
@@ -815,6 +825,8 @@ canvas {
     border-radius: 6px;
     text-decoration: none;
 }
+
+
 
 .history-entry-container .history-btn:hover {
     background-color: #0056b3;
@@ -830,7 +842,7 @@ canvas {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.set-card {
+.history-container- set-card {
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 15px;
@@ -838,7 +850,7 @@ canvas {
     background-color: #fafafa;
 }
 
-.set-card h3 {
+.history-container- set-card h3 {
     margin-top: 0;
     color: #0078d7;
 }
@@ -849,11 +861,14 @@ canvas {
     padding: 10px;
     margin: 10px 0;
     background-color: #fff;
+    display: flex;            
+    justify-content: space-between;
+    align-items: center;       
 }
 
 .session-card p {
-    margin: 5px 0;
-    font-size: 18px;
+    margin: 0;              
+    font-size: 16px;        
 }
 
 /* Statistics button */
@@ -861,13 +876,15 @@ canvas {
     background-color: #0078d7;
     color: white;
     border: none;
-    padding: 4px 8px;       
-    border-radius: 3px;    
+    padding: 2px 6px;        
+    border-radius: 6px;      
+    font-size: 10px;         
+    line-height: 1;
+    display: inline-block;
     cursor: pointer;
-    font-size: 12px;       
-    line-height: 1.2;     
 }
 
 .stat-btn:hover {
     background-color: #005a9e;
 }
+

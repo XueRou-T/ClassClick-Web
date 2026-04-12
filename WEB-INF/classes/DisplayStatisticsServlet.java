@@ -30,6 +30,12 @@ public class DisplayStatisticsServlet extends HttpServlet {
         String sessionIdParam = request.getParameter("sessionId");
         int sessionId = (sessionIdParam != null) ? Integer.parseInt(sessionIdParam) : 0;
 
+        // Read origin flag
+        String origin = request.getParameter("origin");
+        String returnUrl = "mainpageservlet"; // default
+        if ("history".equals(origin)) {
+            returnUrl = "instructorhistory";
+        }
 
         try (Connection conn = getConnection()) {
             // Get all question IDs for this set
@@ -91,7 +97,8 @@ public class DisplayStatisticsServlet extends HttpServlet {
                           "const counts = " + counts.toString() + ";\n" +
                           "new Chart(document.getElementById('chart'), {\n" +
                           "  type: 'bar',\n" +
-                          "  data: { labels: labels, datasets: [{ label: 'Votes', data: counts, " + "backgroundColor: ['#007bff','#28a745','#ffc107','#dc3545'] }] },\n" +
+                          "  data: { labels: labels, datasets: [{ label: 'Votes', data: counts, " +
+                          "backgroundColor: ['#007bff','#28a745','#ffc107','#dc3545'] }] },\n" +
                           "  options: { scales: { y: { beginAtZero: true } } }\n" +
                           "});\n" +
                           "</script>\n";
@@ -114,13 +121,14 @@ public class DisplayStatisticsServlet extends HttpServlet {
                    .replace("<!-- CHART_DATA -->", chartJs)
                    .replace("<!-- SET_ID -->", setId)
                    .replace("<!-- SESSION_ID -->", String.valueOf(sessionId))
+                   .replace("<!-- ORIGIN -->", origin != null ? origin : "mainpage") // NEW
                    .replace("<!-- QINDEX -->", String.valueOf(qIndex + 1))
                    .replace("<!-- TOTAL -->", String.valueOf(totalQuestions))
                    .replace("<!-- PREV -->", String.valueOf(prevIndex))
                    .replace("<!-- NEXT -->", String.valueOf(nextIndex))
                    .replace("<!-- PREV_DISABLED -->", prevDisabled)
                    .replace("<!-- NEXT_DISABLED -->", isLast ? "disabled" : "")
-                   .replace("<!-- RETURN_BUTTON -->", isLast ? "<form method='get' action='mainpageservlet' style='display:inline;'>" + "<button type='submit' class='nav-btn'>Return</button></form>" : "");
+                   .replace("<!-- RETURN_BUTTON -->", isLast ? "<form method='get' action='" + returnUrl + "' style='display:inline;'>" + "<button type='submit' class='nav-btn'>Return</button></form>" : "");
 
         response.setContentType("text/html");
         response.getWriter().write(html);

@@ -78,15 +78,3 @@ INSERT INTO choices (choice, label, is_correct, question_id) VALUES
 ('C','Osaka', FALSE, 8),
 ('D','Nagoya', FALSE, 8);
 
--- Sessions (one per set)
-INSERT INTO sessions (set_id, instructor_id, current_question_id, status) VALUES
-(1, 1, NULL, 'active'),
-(2, 1, NULL, 'active'),
-(3, 1, NULL, 'active'),
-(4, 1, NULL, 'active');
-
--- Sample responses for Physics Basics (students answering Q1)
-INSERT INTO responses (session_id, question_id, choice_id, user_id) VALUES
-(1, 1, 1, 2),  -- Alice answered A
-(1, 1, 2, 3),  -- Bob answered B
-(1, 1, 1, 4);  -- Charlie answered A

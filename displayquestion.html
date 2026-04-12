@@ -22,27 +22,21 @@
     </div>
 
     <div class="nav-buttons">
+        <!-- Previous button -->
         <form method="get" action="displayquestion" style="display:inline;">
             <input type="hidden" name="setId" value="<!-- SET_ID -->">
             <input type="hidden" name="qIndex" value="<!-- PREV -->">
             <button type="submit" class="nav-btn" <!-- PREV_DISABLED --> >Previous</button>
         </form>
 
-        <!-- Next button (disabled if last question) -->
+        <!-- Next button -->
         <form method="get" action="displayquestion" style="display:inline;">
             <input type="hidden" name="setId" value="<!-- SET_ID -->">
             <input type="hidden" name="qIndex" value="<!-- NEXT -->">
             <button type="submit" class="nav-btn" <!-- NEXT_DISABLED --> >Next</button>
         </form>
 
-        <!-- Finish button (only visible if last question) -->
-        <!-- FINISH == true -->
-        <form method="get" action="displayquestion" style="display:inline;" id="finishForm">
-            <input type="hidden" name="setId" value="<!-- SET_ID -->">
-            <input type="hidden" name="qIndex" value="<!-- NEXT -->">
-            <input type="hidden" name="finish" value="true">
-            <button type="submit" class="finish-btn">Finish & Show Statistics</button>
-        </form>
+        <!-- FINISH_BUTTON -->
     </div>
 
 </body>

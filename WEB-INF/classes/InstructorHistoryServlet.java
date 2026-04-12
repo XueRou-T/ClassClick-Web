@@ -52,11 +52,12 @@ public class InstructorHistoryServlet extends HttpServlet {
                         .append("<input type='hidden' name='sessionId' value='").append(sessionId).append("'>")
                         .append("<input type='hidden' name='setId' value='").append(setId).append("'>")
                         .append("<input type='hidden' name='qIndex' value='0'>")
+                        .append("<input type='hidden' name='origin' value='history'>") //pass origin flag
                         .append("<button type='submit' class='stat-btn'>View Statistics</button>")
-                        .append("</form></div>");
+                        .append("</form> </div>");
                 }
 
-                setsHtml.append("<div class='set-card'>")
+                setsHtml.append("<div class='history-container- set-card'>")
                         .append("<h3>").append(setName).append("</h3>")
                         .append(sessionHtml.toString())
                         .append("</div>");

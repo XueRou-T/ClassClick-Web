@@ -33,35 +33,6 @@ html, body {
     color: white;
 }
 
-.search-bar {
-    flex: 1;
-    margin: 0 20px;
-    align-items: center;
-    height: 100%;
-}
-
-.search-bar form {
-    display: flex;
-    margin: auto;
-}
-
-.search-bar input {
-    flex: 1;
-    padding: 5px 10px;
-    border-radius: 3px 0 0 3px;
-    border: none;
-    outline: none;
-}
-
-.search-bar button {
-    padding: 5px 15px;
-    border: none;
-    background-color: #FF8DA1;
-    color: white;
-    border-radius: 0 3px 3px 0;
-    cursor: pointer;
-}
-
 .header-right {
     display: flex;
     align-items: center;

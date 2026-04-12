@@ -387,7 +387,7 @@ h1 {
 }
 
 .secondary-btn {
-    background-color: #6c757d;
+    background-color: #007bff;
     color: #fff;
     border-radius: 6px;
     padding: 8px 16px;
@@ -396,7 +396,7 @@ h1 {
 }
 
 .secondary-btn:hover {
-    background-color: #5a6268;
+    background-color: #0056b3;
 }
 
 /* Review Question Set */

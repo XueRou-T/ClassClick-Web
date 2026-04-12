@@ -29,20 +29,26 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                String usertype = rs.getString("usertype");
 
-                // Create session
-                HttpSession session = request.getSession(true);
-                session.setAttribute("username", rs.getString("username"));
-                session.setAttribute("displayname", rs.getString("display_name"));
-                session.setAttribute("usertype", rs.getString("usertype"));
-                session.setAttribute("userId", rs.getInt("user_id"));
+                if ("instructor".equals(usertype)) {
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("username", rs.getString("username"));
+                    session.setAttribute("displayname", rs.getString("display_name"));
+                    session.setAttribute("usertype", usertype);
+                    session.setAttribute("userId", rs.getInt("user_id"));
 
-                // Redirect to main page
-                response.sendRedirect("mainpageservlet");
-
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().write("SUCCESS");
+                } else if ("student".equals(usertype)) {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write("Students cannot log in here.");
+                }
             } else {
-                response.sendRedirect("login.html?msg=failed");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Wrong Username or Password. Please try again.");
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();

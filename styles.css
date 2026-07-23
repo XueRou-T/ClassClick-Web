@@ -1,0 +1,866 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Roboto:wght@400;500&display=swap');
+
+html, body {
+    margin: 0;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*header*/
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #91bbe9;
+    padding: 10px 20px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 20px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.logo a:link,
+.logo a:visited,
+.logo a:hover,
+.logo a:active{
+    text-decoration: none;
+    color: white;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+}
+
+.header-right a {
+    color: white;
+    text-decoration: none;
+}
+
+
+/*login + signup page*/
+.header-login{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #91bbe9;
+    padding: 10px 20px;
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.login-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+}
+
+
+.login-logo {
+    height: 300px;  
+    width: auto;
+    margin-bottom: 5px;  
+}
+
+.login-error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+/*button properties*/
+button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #FF8DA1;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #FFC2BA; 
+    color: white;
+}
+
+
+.not-clickable-button {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+}
+
+
+
+
+
+/* Container */
+.login-container {
+    width: 500px;
+    background-color: white;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Table spacing */
+.login-container table {
+    width: 100%;
+}
+
+.login-container td {
+    padding: 10px 10px;
+    font-size: 14px;
+}
+
+/* Inputs */
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container input:focus {
+    border-color: black;
+    outline: none;
+}
+
+/* Button */
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FF8DA1;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-container button:hover {
+    background-color: #FFC2BA;
+}
+
+/* Bottom link */
+.login-container a {
+    color: #AD56C4;
+    text-decoration: none;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+/*Instructor Main Page*/
+/* Welcome heading */
+h1 {
+    margin: 20px 0 30px;
+    font-size: 28px;
+    color: #333;
+    text-align: left;     
+    padding-left: 20px;     
+}
+
+/* Session */
+.session-container {
+    margin-bottom: 40px;
+    text-align: center;
+
+}
+
+.session-container h2 {
+    font-size: 28px;
+    text-align: center;
+}
+
+.session-id {
+    font-size: 50px;
+    font-weight: bold;
+    color: #007bff;
+    border: 2px solid #007bff;
+    display: inline-block;
+    padding: 20px 40px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-bottom: 5px;   
+}
+
+/* Create Session */
+.create-session {
+    margin-top: 15px;     
+}
+
+.create-session button {
+    padding: 10px 15px;
+    font-size: 15px;
+    background-color:  #e28dfa; 
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.create-session button:hover {
+    background-color: #9d4eb3;
+}
+
+/* Question Sets */
+.sets-container {
+    margin-top: 30px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.sets-container h2 {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.sets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.set-card {
+    min-width: 200px;
+    text-align: center;
+    background: transparent;   
+    box-shadow: none;
+    padding-left: 10px;
+}
+
+.set-card button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.set-card button:hover {
+    background-color: #0056b3;
+}
+
+/* Create Question Set */
+.create-set-container {
+    margin-top: 30px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.create-set-container h2 {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.create-set-container form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 10px;
+}
+
+.create-set-container input[type="text"] {
+    width: 70%;
+    padding: 8px;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+.create-set-container input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.create-set-container button {
+    padding: 10px 22px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.create-set-container button:hover {
+    background-color: #28a745;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+
+/* Add Question Form */
+.form-container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 700px;
+    width: 100%;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container h2 {
+    margin-bottom: 10px;
+    color: #007bff;
+    text-align: center;
+}
+
+.question-counter {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.primary-btn {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 6px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background-color: #0056b3;
+}
+
+.secondary-btn {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 6px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.secondary-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Review Question Set */
+.questions-overview {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    max-width: 900px;
+    margin: 40px auto;
+}
+.questions-overview h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 24px;
+}
+
+/* Question Card */
+.review-question {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+    position: relative;
+}
+.review-question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.review-question h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin: 0;
+}
+.edit-link {
+    font-size: 13px;
+    color: #888;
+    background: #f0f0f0;
+    padding: 5px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.edit-link:hover {
+    background: #e0e0e0;
+    color: #1a1a1a;
+}
+.card-body p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #444;
+}
+.card-body strong {
+    color: #1a1a1a;
+}
+.choices-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.choice-item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #e0e0e0;
+    background: #f5f5f5;
+    margin-bottom: 6px;
+}
+.choice-item.correct {
+    background: #d4edda;
+    border-color: #c3e6cb;
+    font-weight: bold;
+    color: #155724;
+}
+
+/* Edit Form */
+.edit-form {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.edit-form h4 {
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #007bff;
+}
+.form-group {
+    margin-bottom: 12px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+.edit-form input[type="text"],
+.edit-form textarea,
+.edit-form select {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    background: #fafafa;
+    color: #1a1a1a;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+.edit-form input[type="text"]:focus,
+.edit-form textarea:focus,
+.edit-form select:focus {
+    border-color: #007bff;
+}
+.form-actions {
+    text-align: right;
+}
+.edit-form button {
+    background: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.edit-form button:hover {
+    background: #007bff;
+    color: #ffffff;
+}
+
+/* Buttons */
+.primary-btn {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 6px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
+.primary-btn:hover {
+    background-color: #0056b3;
+}
+.delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border-radius: 6px;
+    padding: 8px 16px;
+}
+.delete-btn:hover {
+    background-color: #80212a;
+}
+
+/* Display Session */
+.display .session-container {
+    margin: 0 auto;         
+    text-align: center;
+    background-color: #fff;
+    padding: 70px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    width: 400px;
+    max-width: 90%;
+    margin-top: 100px;      
+}
+
+.display .session-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.display .session-id {
+    font-size: 100px;         
+    font-weight: bold;
+    color: #007bff;          
+    border: 4px solid #007bff;
+    display: inline-block;
+    padding: 40px 80px;
+    border-radius: 16px;
+    background-color: #fff;
+    margin-bottom: 40px;
+}
+
+/* Start button */
+.start-container {
+    display: flex;            
+    justify-content: center;   
+    margin-top: 100px;
+}
+
+.start-btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    background-color: #0056b3; 
+}
+
+/*Display Questions*/
+h2 {
+    margin: 20px 0;
+    font-size: 24px;
+    text-align: left;   
+    padding-left: 20px; /
+}
+
+
+.question-container {
+    margin: 40px auto;
+    max-width: 700px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.question-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* Options layout */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+    transition: background-color 0.3s;
+}
+
+.option-card:hover {
+    background-color: #e6f7ff;
+}
+
+.option-letter {
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 15px;
+    color: #007bff;
+}
+
+.option-label {
+    font-size: 20px;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+    margin-top: 20px;
+    text-align: left;   
+}
+
+.nav-buttons button {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Default (Previous/Next) */
+.nav-btn {
+    background-color: #007bff;
+}
+.nav-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Disabled state */
+.nav-btn[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Finish button */
+.finish-btn {
+    background-color: #28a745;
+}
+.finish-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* Return button */
+.return-btn {
+    background-color: #007bff;
+}
+.return-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Statistics Page Layout */
+.questions-overview {
+    margin: 40px auto;
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* Each question block */
+.stat-question {
+    margin-bottom: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.stat-question-header h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.question-text {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+/* Options list */
+.choices-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.choice-item {
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.choice-item.correct {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    font-weight: bold;
+    color: #155724;
+}
+
+.choice-item .count {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Chart styling */
+canvas {
+    margin-top: 20px;
+    max-width: 100%;
+    height: 300px;
+}
+
+/* Instructor History */
+.history-entry-container {
+    margin-top: 30px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: left; 
+}
+
+.history-entry-container .history-btn {
+    display: inline-block;  
+    margin-left: 15px;
+    padding: 10px 16px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+
+
+.history-entry-container .history-btn:hover {
+    background-color: #0056b3;
+}
+
+
+.history-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding-left: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.history-container- set-card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #fafafa;
+}
+
+.history-container- set-card h3 {
+    margin-top: 0;
+    color: #0078d7;
+}
+
+.session-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #fff;
+    display: flex;            
+    justify-content: space-between;
+    align-items: center;       
+}
+
+.session-card p {
+    margin: 0;              
+    font-size: 16px;        
+}
+
+/* Statistics button */
+.stat-btn {
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    padding: 2px 6px;        
+    border-radius: 6px;      
+    font-size: 10px;         
+    line-height: 1;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.stat-btn:hover {
+    background-color: #005a9e;
+}
+

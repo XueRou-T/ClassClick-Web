@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instructor Main Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css'>
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="logo"><a href="mainpageservlet">ClassClick</a></div>
+        <a href="logoutservlet"><i class="fa-solid fa-right-from-bracket" style='font-size:24px; color:white'></i></a>
+    </header>
+
+    <!-- Welcome -->
+    <h1>Welcome, <!-- DISPLAY_NAME -->!</h1>
+
+    <!-- Session ID -->
+    <div class="session-container">
+        <h2>Session ID</h2>
+        <div class="session-id"><!-- SESSION_ID --></div>
+
+        <!-- Create Session Button -->
+        <div class="create-session">
+            <!-- CREATE_SESSION_BUTTON -->
+        </div>
+    </div>
+
+    <!-- Sets container -->
+    <div class="sets-container">
+        <h2>Select a Question Set</h2>
+        <div class="sets">
+            <!-- QUESTION_SETS -->
+        </div>
+    </div>
+
+    <!-- Create Question Set -->
+    <div class="create-set-container">
+        <h2>Create a New Question Set</h2>
+
+        <div id="error-message" class="error-message" style="display:none;"></div>
+
+        <form id="createSetForm">
+            <input type="text" id="setName" name="setName" required placeholder="Enter set name">
+            <button type="submit">Create Question Set</button>
+        </form>
+    </div>
+
+    <!-- Instructor History -->
+    <div class="history-entry-container">
+        <h2>View Session History</h2>
+        <a href="instructorhistory" class="history-btn">Go to History</a>
+    </div>
+
+
+
+    <script>
+    document.getElementById("createSetForm").addEventListener("submit", function(e) {
+        e.preventDefault(); 
+        const setNameInput = document.getElementById("setName");
+        const setName = setNameInput.value.trim();
+
+        fetch("createquestionset", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "setName=" + encodeURIComponent(setName)
+        })
+        .then(async res => {
+            const text = await res.text();
+            if (!res.ok) {
+                const errorDiv = document.getElementById("error-message");
+                errorDiv.textContent = text;
+                errorDiv.style.display = "block";
+                setNameInput.value = ""; 
+            } else {
+                const setId = text.replace("SUCCESS:", "");
+                window.location.href = "addquestion?setId=" + setId;
+            }
+        })
+        .catch(err => {
+            const errorDiv = document.getElementById("error-message");
+            errorDiv.textContent = "Unexpected error: " + err;
+            errorDiv.style.display = "block";
+            setNameInput.value = "";
+        });
+    });
+    </script>
+</body>
+</html>
